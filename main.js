@@ -1,3 +1,9 @@
+noseX=0;
+noseY=0;
+difference = 0;
+rightWristX = 0;
+leftWristX = 0;
+
 function setup() {
     video = createCapture(VIDEO);
     video.size(550, 550);
@@ -14,7 +20,14 @@ function modelLoaded() {
 }
 
 function draw() {
+    
     background('#00FFFF');
+
+    document.getElementById("square_side").innerHTML = "Width And Height of a Square will be = " + difference +" px";
+    fill('#FF00FF');
+    stroke('#FF00FF');
+    square(noseX, noseY, difference);
+    
 }
 
 function gotPoses(results) 
@@ -22,5 +35,12 @@ function gotPoses(results)
     if(results.length > 0)
     {
         console.log(results);
+        noseX = results[0].pose.nose.x;
+        noseY = results[0].pose.nose.y;
+        console.log("noseX = " + noseX +"noseY = " + noseY);
+        leftWristX = results[0].pose.leftWrist.x;
+        rightWristX = results[0].pose.rightWrist.x;
+        difference = floor(leftWristX - rightWristX);
+        console.log("leftWristX = " + leftWristX + " rightWristX = " + rightWristX + " difference = " + difference);
     }
 }
